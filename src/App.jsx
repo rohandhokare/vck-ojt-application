@@ -1,27 +1,54 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPages";
-import CoursePage from "./pages/CoursesPage";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import ContactPage from "./pages/ContactPage";
+import "./styles/pages.css"
+import AboutPage from "./pages/AboutPages";
+import CoursesPage from "./pages/CoursesPage";
+import AdmissionsPage from "./pages/AdmissionPage";
 import NotFoundPage from "./pages/NotFoundPage";
-import AdmissionPage from "./pages/AdmissionPage";
+import ChatbotComponent from "./components/Chatbot/ChatbotComponents";
+import "./App.css"
+import { useState } from "react";
+import DeveloperInfoPopup from "./components/DeveloperInfo/DeveloperInfoPopup";
 
 const App = () => {
-  return(
-    <>
-      <Router>
-        <Routes>
-          <Route path ="/" element={<HomePage/>} />
-          <Route path="/home" element={<HomePage/>}/>
-          <Route path="/about" element={<AboutPage/>}/>
-           <Route path="/courses" element={<CoursePage/>}/>
-            <Route path="/contact" element={<ContactPage/>}/>
-             <Route path="/notfound" element={<NotFoundPage/>}/>
-              <Route path="/admission" element={<AdmissionPage/>}/>
-        </Routes>
-      </Router>
-    </>
-  )
+        const [showPopup, setShowPopup] = useState(true);
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+        return (
+                <>
+                <div>
+        {/* Your main application content */}
+        <DeveloperInfoPopup
+          show={showPopup}
+          onClose={handleClosePopup}
+          studentName="Rohan Dashrath Dhokare"
+          studentPhotoUrl="/images/rohan.jpg" // Path to their photo
+          uniqueMessage="Learned so much during this OJT! This app showcases my independent coding and deployment skills"
+        />
+      </div>
+                <Router>
+                        <div className="main-layout">
+                                <Header />
+                                <div className="content">
+                                <Routes>
+                                    <Route path="/" element={<HomePage />} />
+                                    <Route path="/contact" element={<ContactPage/>}/>
+                                    <Route path="/about" element={<AboutPage />} />
+                                    <Route path="/courses" element={<CoursesPage />} />
+                                    <Route path="/admissions" element={<AdmissionsPage />}/>
+                                    <Route path="" element={<NotFoundPage />} />
+                                </Routes>
+  
+                        </div>
+                        <ChatbotComponent/>
+                        <Footer />
+                        </div>
+                        </Router>
+                      </>
+                 );
 }
-
-export default App;
+ export default App;
